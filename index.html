@@ -1,0 +1,987 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Allthings Do - AI Image Tools</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+        body { font-family: 'Inter', sans-serif; }
+        
+        .gradient-bg {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+        
+        .upload-area {
+            border: 2px dashed #cbd5e1;
+            transition: all 0.3s ease;
+        }
+        
+        .upload-area:hover {
+            border-color: #667eea;
+            background-color: #f8fafc;
+        }
+        
+        .upload-area.dragover {
+            border-color: #667eea;
+            background-color: #f1f5f9;
+            transform: scale(1.02);
+        }
+        
+        .feature-card {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+        }
+        
+        .tool-btn {
+            background: white;
+            border: 2px solid #e2e8f0;
+            color: #64748b;
+        }
+        
+        .tool-btn:hover {
+            border-color: #667eea;
+            color: #667eea;
+            transform: translateY(-2px);
+        }
+        
+        .tool-btn.active {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-color: #667eea;
+            color: white;
+        }
+        
+        .page {
+            display: none;
+        }
+        
+        .page.active {
+            display: block;
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- Header -->
+    <header class="bg-white shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center py-4">
+                <div class="flex items-center space-x-2 cursor-pointer" onclick="showPage('home')">
+                    <div class="w-8 h-8 gradient-bg rounded-lg flex items-center justify-center">
+                        <span class="text-white font-bold text-lg">A</span>
+                    </div>
+                    <h1 class="text-2xl font-bold text-gray-900">Allthings Do</h1>
+                </div>
+                <nav class="hidden md:flex space-x-8">
+                    <a href="#" onclick="showPage('tools')" class="text-gray-600 hover:text-purple-600 font-medium">Tools</a>
+                    <a href="#" onclick="showPage('pricing')" class="text-gray-600 hover:text-purple-600 font-medium">Pricing</a>
+                    <a href="#" onclick="showPage('about')" class="text-gray-600 hover:text-purple-600 font-medium">About</a>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <!-- Home Page -->
+    <div id="homePage" class="page active">
+        <!-- Hero Section -->
+        <section class="gradient-bg py-20">
+            <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+                <h2 class="text-4xl md:text-5xl font-bold text-white mb-6">
+                    AI Image Tools Suite
+                </h2>
+                <p class="text-xl text-purple-100 mb-8 max-w-2xl mx-auto">
+                    Professional image editing tools powered by artificial intelligence. Enhance, resize, compress, and transform your images with ease.
+                </p>
+                <button onclick="showPage('tools')" class="bg-white text-purple-600 px-8 py-4 rounded-lg font-semibold text-lg hover:bg-gray-100 transition-colors">
+                    Explore Tools
+                </button>
+            </div>
+        </section>
+
+        <!-- Tools Grid -->
+        <section class="py-16">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center mb-12">
+                    <h3 class="text-3xl font-bold text-gray-900 mb-4">Choose Your Tool</h3>
+                    <p class="text-xl text-gray-600">Professional image editing made simple</p>
+                </div>
+                
+                <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+                    <div onclick="showPage('upscale')" class="feature-card bg-white p-6 rounded-xl text-center cursor-pointer border-2 border-transparent hover:border-purple-200">
+                        <div class="text-4xl mb-4">🔍</div>
+                        <h4 class="text-lg font-semibold text-gray-900 mb-2">Upscale Image</h4>
+                        <p class="text-gray-600 text-sm">Enhance resolution up to 4x</p>
+                    </div>
+                    
+                    <div onclick="showPage('compress')" class="feature-card bg-white p-6 rounded-xl text-center cursor-pointer border-2 border-transparent hover:border-purple-200">
+                        <div class="text-4xl mb-4">📦</div>
+                        <h4 class="text-lg font-semibold text-gray-900 mb-2">Compress Image</h4>
+                        <p class="text-gray-600 text-sm">Reduce file size efficiently</p>
+                    </div>
+                    
+                    <div onclick="showPage('resize')" class="feature-card bg-white p-6 rounded-xl text-center cursor-pointer border-2 border-transparent hover:border-purple-200">
+                        <div class="text-4xl mb-4">📏</div>
+                        <h4 class="text-lg font-semibold text-gray-900 mb-2">Resize Image</h4>
+                        <p class="text-gray-600 text-sm">Change dimensions precisely</p>
+                    </div>
+                    
+                    <div onclick="showPage('crop')" class="feature-card bg-white p-6 rounded-xl text-center cursor-pointer border-2 border-transparent hover:border-purple-200">
+                        <div class="text-4xl mb-4">✂️</div>
+                        <h4 class="text-lg font-semibold text-gray-900 mb-2">Crop Image</h4>
+                        <p class="text-gray-600 text-sm">Perfect aspect ratios</p>
+                    </div>
+                    
+                    <div onclick="showPage('convert')" class="feature-card bg-white p-6 rounded-xl text-center cursor-pointer border-2 border-transparent hover:border-purple-200">
+                        <div class="text-4xl mb-4">🔄</div>
+                        <h4 class="text-lg font-semibold text-gray-900 mb-2">Convert Format</h4>
+                        <p class="text-gray-600 text-sm">Change file formats easily</p>
+                    </div>
+                    
+                    <div onclick="showPage('background')" class="feature-card bg-white p-6 rounded-xl text-center cursor-pointer border-2 border-transparent hover:border-purple-200">
+                        <div class="text-4xl mb-4">🎨</div>
+                        <h4 class="text-lg font-semibold text-gray-900 mb-2">Remove Background</h4>
+                        <p class="text-gray-600 text-sm">AI-powered background removal</p>
+                    </div>
+                    
+                    <div onclick="showPage('watermark')" class="feature-card bg-white p-6 rounded-xl text-center cursor-pointer border-2 border-transparent hover:border-purple-200">
+                        <div class="text-4xl mb-4">💧</div>
+                        <h4 class="text-lg font-semibold text-gray-900 mb-2">Add Watermark</h4>
+                        <p class="text-gray-600 text-sm">Protect your images</p>
+                    </div>
+                    
+                    <div onclick="showPage('rotate')" class="feature-card bg-white p-6 rounded-xl text-center cursor-pointer border-2 border-transparent hover:border-purple-200">
+                        <div class="text-4xl mb-4">🔄</div>
+                        <h4 class="text-lg font-semibold text-gray-900 mb-2">Rotate Image</h4>
+                        <p class="text-gray-600 text-sm">Fix orientation issues</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Features Section -->
+        <section class="py-16 bg-white">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center mb-12">
+                    <h3 class="text-3xl font-bold text-gray-900 mb-4">Why Choose Allthings Do?</h3>
+                    <p class="text-xl text-gray-600 max-w-2xl mx-auto">
+                        Our AI-powered tools deliver professional results with cutting-edge technology
+                    </p>
+                </div>
+                
+                <div class="grid md:grid-cols-3 gap-8">
+                    <div class="feature-card bg-gray-50 p-8 rounded-xl text-center">
+                        <div class="w-12 h-12 gradient-bg rounded-lg flex items-center justify-center mx-auto mb-4">
+                            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+                            </svg>
+                        </div>
+                        <h4 class="text-xl font-semibold text-gray-900 mb-2">Lightning Fast</h4>
+                        <p class="text-gray-600">Process images in seconds with our optimized AI algorithms</p>
+                    </div>
+                    
+                    <div class="feature-card bg-gray-50 p-8 rounded-xl text-center">
+                        <div class="w-12 h-12 gradient-bg rounded-lg flex items-center justify-center mx-auto mb-4">
+                            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                            </svg>
+                        </div>
+                        <h4 class="text-xl font-semibold text-gray-900 mb-2">Premium Quality</h4>
+                        <p class="text-gray-600">Maintain image quality while increasing resolution up to 4x</p>
+                    </div>
+                    
+                    <div class="feature-card bg-gray-50 p-8 rounded-xl text-center">
+                        <div class="w-12 h-12 gradient-bg rounded-lg flex items-center justify-center mx-auto mb-4">
+                            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path>
+                            </svg>
+                        </div>
+                        <h4 class="text-xl font-semibold text-gray-900 mb-2">100% Secure</h4>
+                        <p class="text-gray-600">Your images are processed securely and deleted after 24 hours</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Tools Page -->
+    <div id="toolsPage" class="page">
+        <section class="gradient-bg py-16">
+            <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+                <h2 class="text-4xl font-bold text-white mb-6">All Tools</h2>
+                <p class="text-xl text-purple-100">Choose from our comprehensive suite of image editing tools</p>
+            </div>
+        </section>
+        
+        <section class="py-16">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+                    <div onclick="showPage('upscale')" class="feature-card bg-white p-8 rounded-xl text-center cursor-pointer">
+                        <div class="text-5xl mb-4">🔍</div>
+                        <h4 class="text-xl font-semibold text-gray-900 mb-2">Upscale Image</h4>
+                        <p class="text-gray-600">Enhance resolution up to 4x using AI</p>
+                    </div>
+                    
+                    <div onclick="showPage('compress')" class="feature-card bg-white p-8 rounded-xl text-center cursor-pointer">
+                        <div class="text-5xl mb-4">📦</div>
+                        <h4 class="text-xl font-semibold text-gray-900 mb-2">Compress Image</h4>
+                        <p class="text-gray-600">Reduce file size while maintaining quality</p>
+                    </div>
+                    
+                    <div onclick="showPage('resize')" class="feature-card bg-white p-8 rounded-xl text-center cursor-pointer">
+                        <div class="text-5xl mb-4">📏</div>
+                        <h4 class="text-xl font-semibold text-gray-900 mb-2">Resize Image</h4>
+                        <p class="text-gray-600">Change dimensions to exact specifications</p>
+                    </div>
+                    
+                    <div onclick="showPage('crop')" class="feature-card bg-white p-8 rounded-xl text-center cursor-pointer">
+                        <div class="text-5xl mb-4">✂️</div>
+                        <h4 class="text-xl font-semibold text-gray-900 mb-2">Crop Image</h4>
+                        <p class="text-gray-600">Perfect aspect ratios for any platform</p>
+                    </div>
+                    
+                    <div onclick="showPage('convert')" class="feature-card bg-white p-8 rounded-xl text-center cursor-pointer">
+                        <div class="text-5xl mb-4">🔄</div>
+                        <h4 class="text-xl font-semibold text-gray-900 mb-2">Convert Format</h4>
+                        <p class="text-gray-600">Change between JPG, PNG, WebP, PDF</p>
+                    </div>
+                    
+                    <div onclick="showPage('background')" class="feature-card bg-white p-8 rounded-xl text-center cursor-pointer">
+                        <div class="text-5xl mb-4">🎨</div>
+                        <h4 class="text-xl font-semibold text-gray-900 mb-2">Remove Background</h4>
+                        <p class="text-gray-600">AI-powered background removal</p>
+                    </div>
+                    
+                    <div onclick="showPage('watermark')" class="feature-card bg-white p-8 rounded-xl text-center cursor-pointer">
+                        <div class="text-5xl mb-4">💧</div>
+                        <h4 class="text-xl font-semibold text-gray-900 mb-2">Add Watermark</h4>
+                        <p class="text-gray-600">Protect your images with custom watermarks</p>
+                    </div>
+                    
+                    <div onclick="showPage('rotate')" class="feature-card bg-white p-8 rounded-xl text-center cursor-pointer">
+                        <div class="text-5xl mb-4">🔄</div>
+                        <h4 class="text-xl font-semibold text-gray-900 mb-2">Rotate Image</h4>
+                        <p class="text-gray-600">Fix orientation and rotation issues</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Pricing Page -->
+    <div id="pricingPage" class="page">
+        <section class="gradient-bg py-16">
+            <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+                <h2 class="text-4xl font-bold text-white mb-6">Simple Pricing</h2>
+                <p class="text-xl text-purple-100">Choose the plan that works best for you</p>
+            </div>
+        </section>
+        
+        <section class="py-16">
+            <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="grid md:grid-cols-3 gap-8">
+                    <div class="bg-white p-8 rounded-2xl shadow-lg">
+                        <h3 class="text-2xl font-bold text-gray-900 mb-4">Free</h3>
+                        <div class="text-4xl font-bold text-gray-900 mb-6">$0<span class="text-lg text-gray-600">/month</span></div>
+                        <ul class="space-y-3 mb-8">
+                            <li class="flex items-center"><span class="text-green-500 mr-2">✓</span> 10 images per month</li>
+                            <li class="flex items-center"><span class="text-green-500 mr-2">✓</span> Basic tools access</li>
+                            <li class="flex items-center"><span class="text-green-500 mr-2">✓</span> Standard quality</li>
+                        </ul>
+                        <button class="w-full gradient-bg text-white py-3 rounded-lg font-semibold hover:opacity-90">Get Started</button>
+                    </div>
+                    
+                    <div class="bg-white p-8 rounded-2xl shadow-lg border-2 border-purple-500 relative">
+                        <div class="absolute -top-4 left-1/2 transform -translate-x-1/2 bg-purple-500 text-white px-4 py-1 rounded-full text-sm font-semibold">Popular</div>
+                        <h3 class="text-2xl font-bold text-gray-900 mb-4">Pro</h3>
+                        <div class="text-4xl font-bold text-gray-900 mb-6">$9<span class="text-lg text-gray-600">/month</span></div>
+                        <ul class="space-y-3 mb-8">
+                            <li class="flex items-center"><span class="text-green-500 mr-2">✓</span> 500 images per month</li>
+                            <li class="flex items-center"><span class="text-green-500 mr-2">✓</span> All tools access</li>
+                            <li class="flex items-center"><span class="text-green-500 mr-2">✓</span> High quality processing</li>
+                            <li class="flex items-center"><span class="text-green-500 mr-2">✓</span> Priority support</li>
+                        </ul>
+                        <button class="w-full gradient-bg text-white py-3 rounded-lg font-semibold hover:opacity-90">Choose Pro</button>
+                    </div>
+                    
+                    <div class="bg-white p-8 rounded-2xl shadow-lg">
+                        <h3 class="text-2xl font-bold text-gray-900 mb-4">Enterprise</h3>
+                        <div class="text-4xl font-bold text-gray-900 mb-6">$29<span class="text-lg text-gray-600">/month</span></div>
+                        <ul class="space-y-3 mb-8">
+                            <li class="flex items-center"><span class="text-green-500 mr-2">✓</span> Unlimited images</li>
+                            <li class="flex items-center"><span class="text-green-500 mr-2">✓</span> All tools + API access</li>
+                            <li class="flex items-center"><span class="text-green-500 mr-2">✓</span> Maximum quality</li>
+                            <li class="flex items-center"><span class="text-green-500 mr-2">✓</span> 24/7 support</li>
+                        </ul>
+                        <button class="w-full gradient-bg text-white py-3 rounded-lg font-semibold hover:opacity-90">Contact Sales</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- About Page -->
+    <div id="aboutPage" class="page">
+        <section class="gradient-bg py-16">
+            <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+                <h2 class="text-4xl font-bold text-white mb-6">About Allthings Do</h2>
+                <p class="text-xl text-purple-100">Empowering creators with AI-powered image tools</p>
+            </div>
+        </section>
+        
+        <section class="py-16">
+            <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="bg-white rounded-2xl shadow-lg p-12">
+                    <h3 class="text-3xl font-bold text-gray-900 mb-6">Our Mission</h3>
+                    <p class="text-lg text-gray-600 mb-8">
+                        At Allthings Do, we believe that powerful image editing tools should be accessible to everyone. 
+                        Our AI-powered platform democratizes professional image editing, making it simple for creators, 
+                        businesses, and individuals to enhance their visual content.
+                    </p>
+                    
+                    <h3 class="text-3xl font-bold text-gray-900 mb-6">Why Choose Us?</h3>
+                    <div class="grid md:grid-cols-2 gap-8">
+                        <div>
+                            <h4 class="text-xl font-semibold text-gray-900 mb-3">🚀 Cutting-Edge AI</h4>
+                            <p class="text-gray-600">Our algorithms are trained on millions of images to deliver the best results.</p>
+                        </div>
+                        <div>
+                            <h4 class="text-xl font-semibold text-gray-900 mb-3">🔒 Privacy First</h4>
+                            <p class="text-gray-600">Your images are processed securely and automatically deleted after 24 hours.</p>
+                        </div>
+                        <div>
+                            <h4 class="text-xl font-semibold text-gray-900 mb-3">⚡ Lightning Fast</h4>
+                            <p class="text-gray-600">Process images in seconds with our optimized cloud infrastructure.</p>
+                        </div>
+                        <div>
+                            <h4 class="text-xl font-semibold text-gray-900 mb-3">💡 Easy to Use</h4>
+                            <p class="text-gray-600">No technical knowledge required. Just upload, process, and download.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Individual Tool Pages -->
+    <div id="upscalePage" class="page">
+        <section class="gradient-bg py-16">
+            <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+                <div class="text-6xl mb-4">🔍</div>
+                <h2 class="text-4xl font-bold text-white mb-6">AI Image Upscaler</h2>
+                <p class="text-xl text-purple-100">Enhance your images with artificial intelligence. Upscale and improve image quality up to 4x without losing detail.</p>
+            </div>
+        </section>
+        
+        <section class="py-16">
+            <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="bg-white rounded-2xl shadow-xl p-8">
+                    <div id="upscaleUploadArea" class="upload-area rounded-xl p-12 text-center cursor-pointer">
+                        <div class="w-16 h-16 gradient-bg rounded-full flex items-center justify-center mx-auto mb-4">
+                            <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"></path>
+                            </svg>
+                        </div>
+                        <h3 class="text-xl font-semibold text-gray-900 mb-2">Select image to upscale</h3>
+                        <p class="text-gray-600 mb-4">or drop it here</p>
+                        <button class="gradient-bg text-white px-6 py-3 rounded-lg font-medium hover:opacity-90 transition-opacity">
+                            Choose Image
+                        </button>
+                        <p class="text-sm text-gray-500 mt-4">Supports JPG, PNG, WEBP up to 10MB</p>
+                    </div>
+                    
+                    <div class="mt-8 p-6 bg-gray-50 rounded-xl">
+                        <h4 class="text-lg font-semibold text-gray-900 mb-4">Upscale Settings</h4>
+                        <div class="grid md:grid-cols-2 gap-6">
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">Scale Factor</label>
+                                <select class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-purple-500 focus:border-transparent">
+                                    <option value="2">2x (Recommended)</option>
+                                    <option value="4">4x (Maximum)</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">Enhancement Type</label>
+                                <select class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-purple-500 focus:border-transparent">
+                                    <option value="general">General (Default)</option>
+                                    <option value="photo">Photo Enhancement</option>
+                                    <option value="art">Digital Art</option>
+                                </select>
+                            </div>
+                        </div>
+                        <button onclick="processImage('upscale')" class="mt-6 gradient-bg text-white px-8 py-3 rounded-lg font-medium hover:opacity-90 transition-opacity">
+                            Start Upscaling
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Compress Page -->
+    <div id="compressPage" class="page">
+        <section class="gradient-bg py-16">
+            <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+                <div class="text-6xl mb-4">📦</div>
+                <h2 class="text-4xl font-bold text-white mb-6">Image Compressor</h2>
+                <p class="text-xl text-purple-100">Reduce file size while maintaining quality. Perfect for web optimization and faster loading times.</p>
+            </div>
+        </section>
+        
+        <section class="py-16">
+            <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="bg-white rounded-2xl shadow-xl p-8">
+                    <div class="upload-area rounded-xl p-12 text-center cursor-pointer">
+                        <div class="w-16 h-16 gradient-bg rounded-full flex items-center justify-center mx-auto mb-4">
+                            <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"></path>
+                            </svg>
+                        </div>
+                        <h3 class="text-xl font-semibold text-gray-900 mb-2">Select image to compress</h3>
+                        <p class="text-gray-600 mb-4">or drop it here</p>
+                        <button class="gradient-bg text-white px-6 py-3 rounded-lg font-medium hover:opacity-90 transition-opacity">
+                            Choose Image
+                        </button>
+                        <p class="text-sm text-gray-500 mt-4">Supports JPG, PNG, WEBP up to 10MB</p>
+                    </div>
+                    
+                    <div class="mt-8 p-6 bg-gray-50 rounded-xl">
+                        <h4 class="text-lg font-semibold text-gray-900 mb-4">Compression Settings</h4>
+                        <div class="grid md:grid-cols-2 gap-6">
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">Quality Level</label>
+                                <select class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-purple-500 focus:border-transparent">
+                                    <option value="high">High Quality (80%)</option>
+                                    <option value="medium">Medium Quality (60%)</option>
+                                    <option value="low">Low Quality (40%)</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">Target Size</label>
+                                <select class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-purple-500 focus:border-transparent">
+                                    <option value="auto">Auto Optimize</option>
+                                    <option value="1mb">Under 1MB</option>
+                                    <option value="500kb">Under 500KB</option>
+                                </select>
+                            </div>
+                        </div>
+                        <button onclick="processImage('compress')" class="mt-6 gradient-bg text-white px-8 py-3 rounded-lg font-medium hover:opacity-90 transition-opacity">
+                            Start Compression
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Resize Page -->
+    <div id="resizePage" class="page">
+        <section class="gradient-bg py-16">
+            <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+                <div class="text-6xl mb-4">📏</div>
+                <h2 class="text-4xl font-bold text-white mb-6">Image Resizer</h2>
+                <p class="text-xl text-purple-100">Change image dimensions to exact pixel values. Maintain aspect ratio or set custom dimensions.</p>
+            </div>
+        </section>
+        
+        <section class="py-16">
+            <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="bg-white rounded-2xl shadow-xl p-8">
+                    <div class="upload-area rounded-xl p-12 text-center cursor-pointer">
+                        <div class="w-16 h-16 gradient-bg rounded-full flex items-center justify-center mx-auto mb-4">
+                            <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"></path>
+                            </svg>
+                        </div>
+                        <h3 class="text-xl font-semibold text-gray-900 mb-2">Select image to resize</h3>
+                        <p class="text-gray-600 mb-4">or drop it here</p>
+                        <button class="gradient-bg text-white px-6 py-3 rounded-lg font-medium hover:opacity-90 transition-opacity">
+                            Choose Image
+                        </button>
+                        <p class="text-sm text-gray-500 mt-4">Supports JPG, PNG, WEBP up to 10MB</p>
+                    </div>
+                    
+                    <div class="mt-8 p-6 bg-gray-50 rounded-xl">
+                        <h4 class="text-lg font-semibold text-gray-900 mb-4">Resize Settings</h4>
+                        <div class="grid md:grid-cols-2 gap-6">
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">Width (px)</label>
+                                <input type="number" placeholder="1920" class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-purple-500 focus:border-transparent">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">Height (px)</label>
+                                <input type="number" placeholder="1080" class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-purple-500 focus:border-transparent">
+                            </div>
+                        </div>
+                        <div class="mt-4">
+                            <label class="flex items-center">
+                                <input type="checkbox" checked class="rounded border-gray-300 text-purple-600 focus:ring-purple-500">
+                                <span class="ml-2 text-sm text-gray-700">Maintain aspect ratio</span>
+                            </label>
+                        </div>
+                        <button onclick="processImage('resize')" class="mt-6 gradient-bg text-white px-8 py-3 rounded-lg font-medium hover:opacity-90 transition-opacity">
+                            Resize Image
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Crop Page -->
+    <div id="cropPage" class="page">
+        <section class="gradient-bg py-16">
+            <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+                <div class="text-6xl mb-4">✂️</div>
+                <h2 class="text-4xl font-bold text-white mb-6">Image Cropper</h2>
+                <p class="text-xl text-purple-100">Crop images to specific aspect ratios or custom dimensions. Perfect for social media and web use.</p>
+            </div>
+        </section>
+        
+        <section class="py-16">
+            <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="bg-white rounded-2xl shadow-xl p-8">
+                    <div class="upload-area rounded-xl p-12 text-center cursor-pointer">
+                        <div class="w-16 h-16 gradient-bg rounded-full flex items-center justify-center mx-auto mb-4">
+                            <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"></path>
+                            </svg>
+                        </div>
+                        <h3 class="text-xl font-semibold text-gray-900 mb-2">Select image to crop</h3>
+                        <p class="text-gray-600 mb-4">or drop it here</p>
+                        <button class="gradient-bg text-white px-6 py-3 rounded-lg font-medium hover:opacity-90 transition-opacity">
+                            Choose Image
+                        </button>
+                        <p class="text-sm text-gray-500 mt-4">Supports JPG, PNG, WEBP up to 10MB</p>
+                    </div>
+                    
+                    <div class="mt-8 p-6 bg-gray-50 rounded-xl">
+                        <h4 class="text-lg font-semibold text-gray-900 mb-4">Crop Settings</h4>
+                        <div class="grid md:grid-cols-2 gap-6">
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">Aspect Ratio</label>
+                                <select class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-purple-500 focus:border-transparent">
+                                    <option value="free">Free Form</option>
+                                    <option value="1:1">Square (1:1)</option>
+                                    <option value="16:9">Widescreen (16:9)</option>
+                                    <option value="4:3">Standard (4:3)</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">Position</label>
+                                <select class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-purple-500 focus:border-transparent">
+                                    <option value="center">Center</option>
+                                    <option value="top">Top</option>
+                                    <option value="bottom">Bottom</option>
+                                    <option value="left">Left</option>
+                                    <option value="right">Right</option>
+                                </select>
+                            </div>
+                        </div>
+                        <button onclick="processImage('crop')" class="mt-6 gradient-bg text-white px-8 py-3 rounded-lg font-medium hover:opacity-90 transition-opacity">
+                            Crop Image
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Convert Page -->
+    <div id="convertPage" class="page">
+        <section class="gradient-bg py-16">
+            <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+                <div class="text-6xl mb-4">🔄</div>
+                <h2 class="text-4xl font-bold text-white mb-6">Format Converter</h2>
+                <p class="text-xl text-purple-100">Convert between different image formats (JPG, PNG, WebP, PDF) with quality control.</p>
+            </div>
+        </section>
+        
+        <section class="py-16">
+            <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="bg-white rounded-2xl shadow-xl p-8">
+                    <div class="upload-area rounded-xl p-12 text-center cursor-pointer">
+                        <div class="w-16 h-16 gradient-bg rounded-full flex items-center justify-center mx-auto mb-4">
+                            <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"></path>
+                            </svg>
+                        </div>
+                        <h3 class="text-xl font-semibold text-gray-900 mb-2">Select image to convert</h3>
+                        <p class="text-gray-600 mb-4">or drop it here</p>
+                        <button class="gradient-bg text-white px-6 py-3 rounded-lg font-medium hover:opacity-90 transition-opacity">
+                            Choose Image
+                        </button>
+                        <p class="text-sm text-gray-500 mt-4">Supports JPG, PNG, WEBP up to 10MB</p>
+                    </div>
+                    
+                    <div class="mt-8 p-6 bg-gray-50 rounded-xl">
+                        <h4 class="text-lg font-semibold text-gray-900 mb-4">Format Conversion</h4>
+                        <div class="grid md:grid-cols-2 gap-6">
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">Convert To</label>
+                                <select class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-purple-500 focus:border-transparent">
+                                    <option value="jpg">JPG</option>
+                                    <option value="png">PNG</option>
+                                    <option value="webp">WebP</option>
+                                    <option value="pdf">PDF</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">Quality</label>
+                                <select class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-purple-500 focus:border-transparent">
+                                    <option value="100">Maximum (100%)</option>
+                                    <option value="90">High (90%)</option>
+                                    <option value="80">Good (80%)</option>
+                                </select>
+                            </div>
+                        </div>
+                        <button onclick="processImage('convert')" class="mt-6 gradient-bg text-white px-8 py-3 rounded-lg font-medium hover:opacity-90 transition-opacity">
+                            Convert Format
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Background Page -->
+    <div id="backgroundPage" class="page">
+        <section class="gradient-bg py-16">
+            <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+                <div class="text-6xl mb-4">🎨</div>
+                <h2 class="text-4xl font-bold text-white mb-6">Background Remover</h2>
+                <p class="text-xl text-purple-100">Automatically remove backgrounds from images using AI. Perfect for product photos and portraits.</p>
+            </div>
+        </section>
+        
+        <section class="py-16">
+            <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="bg-white rounded-2xl shadow-xl p-8">
+                    <div class="upload-area rounded-xl p-12 text-center cursor-pointer">
+                        <div class="w-16 h-16 gradient-bg rounded-full flex items-center justify-center mx-auto mb-4">
+                            <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"></path>
+                            </svg>
+                        </div>
+                        <h3 class="text-xl font-semibold text-gray-900 mb-2">Select image to process</h3>
+                        <p class="text-gray-600 mb-4">or drop it here</p>
+                        <button class="gradient-bg text-white px-6 py-3 rounded-lg font-medium hover:opacity-90 transition-opacity">
+                            Choose Image
+                        </button>
+                        <p class="text-sm text-gray-500 mt-4">Supports JPG, PNG, WEBP up to 10MB</p>
+                    </div>
+                    
+                    <div class="mt-8 p-6 bg-gray-50 rounded-xl">
+                        <h4 class="text-lg font-semibold text-gray-900 mb-4">Background Removal</h4>
+                        <div class="grid md:grid-cols-2 gap-6">
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">Detection Mode</label>
+                                <select class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-purple-500 focus:border-transparent">
+                                    <option value="auto">Auto Detect</option>
+                                    <option value="person">Person</option>
+                                    <option value="object">Object</option>
+                                    <option value="product">Product</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">Edge Smoothing</label>
+                                <select class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-purple-500 focus:border-transparent">
+                                    <option value="medium">Medium</option>
+                                    <option value="low">Low</option>
+                                    <option value="high">High</option>
+                                </select>
+                            </div>
+                        </div>
+                        <button onclick="processImage('background')" class="mt-6 gradient-bg text-white px-8 py-3 rounded-lg font-medium hover:opacity-90 transition-opacity">
+                            Remove Background
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Watermark Page -->
+    <div id="watermarkPage" class="page">
+        <section class="gradient-bg py-16">
+            <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+                <div class="text-6xl mb-4">💧</div>
+                <h2 class="text-4xl font-bold text-white mb-6">Watermark Tool</h2>
+                <p class="text-xl text-purple-100">Add text or image watermarks to protect your images. Customize position, opacity, and style.</p>
+            </div>
+        </section>
+        
+        <section class="py-16">
+            <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="bg-white rounded-2xl shadow-xl p-8">
+                    <div class="upload-area rounded-xl p-12 text-center cursor-pointer">
+                        <div class="w-16 h-16 gradient-bg rounded-full flex items-center justify-center mx-auto mb-4">
+                            <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"></path>
+                            </svg>
+                        </div>
+                        <h3 class="text-xl font-semibold text-gray-900 mb-2">Select image for watermark</h3>
+                        <p class="text-gray-600 mb-4">or drop it here</p>
+                        <button class="gradient-bg text-white px-6 py-3 rounded-lg font-medium hover:opacity-90 transition-opacity">
+                            Choose Image
+                        </button>
+                        <p class="text-sm text-gray-500 mt-4">Supports JPG, PNG, WEBP up to 10MB</p>
+                    </div>
+                    
+                    <div class="mt-8 p-6 bg-gray-50 rounded-xl">
+                        <h4 class="text-lg font-semibold text-gray-900 mb-4">Watermark Settings</h4>
+                        <div class="grid md:grid-cols-2 gap-6">
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">Watermark Text</label>
+                                <input type="text" placeholder="© Your Name" class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-purple-500 focus:border-transparent">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">Position</label>
+                                <select class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-purple-500 focus:border-transparent">
+                                    <option value="bottom-right">Bottom Right</option>
+                                    <option value="bottom-left">Bottom Left</option>
+                                    <option value="top-right">Top Right</option>
+                                    <option value="top-left">Top Left</option>
+                                    <option value="center">Center</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="mt-4">
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Opacity</label>
+                            <input type="range" min="10" max="100" value="50" class="w-full">
+                        </div>
+                        <button onclick="processImage('watermark')" class="mt-6 gradient-bg text-white px-8 py-3 rounded-lg font-medium hover:opacity-90 transition-opacity">
+                            Add Watermark
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Rotate Page -->
+    <div id="rotatePage" class="page">
+        <section class="gradient-bg py-16">
+            <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+                <div class="text-6xl mb-4">🔄</div>
+                <h2 class="text-4xl font-bold text-white mb-6">Image Rotator</h2>
+                <p class="text-xl text-purple-100">Rotate images by specific angles or flip horizontally/vertically. Fix orientation issues easily.</p>
+            </div>
+        </section>
+        
+        <section class="py-16">
+            <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="bg-white rounded-2xl shadow-xl p-8">
+                    <div class="upload-area rounded-xl p-12 text-center cursor-pointer">
+                        <div class="w-16 h-16 gradient-bg rounded-full flex items-center justify-center mx-auto mb-4">
+                            <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"></path>
+                            </svg>
+                        </div>
+                        <h3 class="text-xl font-semibold text-gray-900 mb-2">Select image to rotate</h3>
+                        <p class="text-gray-600 mb-4">or drop it here</p>
+                        <button class="gradient-bg text-white px-6 py-3 rounded-lg font-medium hover:opacity-90 transition-opacity">
+                            Choose Image
+                        </button>
+                        <p class="text-sm text-gray-500 mt-4">Supports JPG, PNG, WEBP up to 10MB</p>
+                    </div>
+                    
+                    <div class="mt-8 p-6 bg-gray-50 rounded-xl">
+                        <h4 class="text-lg font-semibold text-gray-900 mb-4">Rotation Settings</h4>
+                        <div class="grid md:grid-cols-2 gap-6">
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">Rotation Angle</label>
+                                <select class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-purple-500 focus:border-transparent">
+                                    <option value="90">90° Clockwise</option>
+                                    <option value="-90">90° Counter-clockwise</option>
+                                    <option value="180">180°</option>
+                                    <option value="custom">Custom Angle</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">Background Fill</label>
+                                <select class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-purple-500 focus:border-transparent">
+                                    <option value="white">White</option>
+                                    <option value="black">Black</option>
+                                    <option value="transparent">Transparent</option>
+                                </select>
+                            </div>
+                        </div>
+                        <button onclick="processImage('rotate')" class="mt-6 gradient-bg text-white px-8 py-3 rounded-lg font-medium hover:opacity-90 transition-opacity">
+                            Rotate Image
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid md:grid-cols-4 gap-8">
+                <div>
+                    <div class="flex items-center space-x-2 mb-4">
+                        <div class="w-8 h-8 gradient-bg rounded-lg flex items-center justify-center">
+                            <span class="text-white font-bold text-lg">A</span>
+                        </div>
+                        <h5 class="text-xl font-bold">Allthings Do</h5>
+                    </div>
+                    <p class="text-gray-400">AI-powered tools for all your creative needs.</p>
+                </div>
+                
+                <div>
+                    <h6 class="font-semibold mb-4">Tools</h6>
+                    <ul class="space-y-2 text-gray-400">
+                        <li><a href="#" onclick="showPage('upscale')" class="hover:text-white transition-colors">Image Upscaler</a></li>
+                        <li><a href="#" onclick="showPage('background')" class="hover:text-white transition-colors">Background Remover</a></li>
+                        <li><a href="#" onclick="showPage('compress')" class="hover:text-white transition-colors">Image Compressor</a></li>
+                        <li><a href="#" onclick="showPage('resize')" class="hover:text-white transition-colors">Image Resizer</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h6 class="font-semibold mb-4">Company</h6>
+                    <ul class="space-y-2 text-gray-400">
+                        <li><a href="#" onclick="showPage('about')" class="hover:text-white transition-colors">About Us</a></li>
+                        <li><a href="#" onclick="alert('Privacy Policy page would be here')" class="hover:text-white transition-colors">Privacy Policy</a></li>
+                        <li><a href="#" onclick="alert('Terms of Service page would be here')" class="hover:text-white transition-colors">Terms of Service</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h6 class="font-semibold mb-4">Support</h6>
+                    <ul class="space-y-2 text-gray-400">
+                        <li><a href="#" onclick="alert('Help Center page would be here')" class="hover:text-white transition-colors">Help Center</a></li>
+                        <li><a href="#" onclick="alert('Contact form would be here')" class="hover:text-white transition-colors">Contact Us</a></li>
+                        <li><a href="#" onclick="alert('API Documentation would be here')" class="hover:text-white transition-colors">API Documentation</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-800 mt-8 pt-8 text-center text-gray-400">
+                <p>&copy; 2024 Allthings Do. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Page navigation
+        function showPage(pageId) {
+            // Hide all pages
+            document.querySelectorAll('.page').forEach(page => {
+                page.classList.remove('active');
+            });
+            
+            // Show selected page
+            const targetPage = document.getElementById(pageId + 'Page');
+            if (targetPage) {
+                targetPage.classList.add('active');
+            }
+            
+            // Scroll to top
+            window.scrollTo(0, 0);
+        }
+
+        // Image processing simulation
+        function processImage(tool) {
+            // Create processing modal
+            const modal = document.createElement('div');
+            modal.className = 'fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50';
+            modal.innerHTML = `
+                <div class="bg-white rounded-2xl p-8 max-w-md w-full mx-4">
+                    <div class="text-center">
+                        <div class="w-16 h-16 gradient-bg rounded-full flex items-center justify-center mx-auto mb-4 animate-pulse">
+                            <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                            </svg>
+                        </div>
+                        <h3 class="text-xl font-semibold text-gray-900 mb-2">Processing your image...</h3>
+                        <div class="w-64 bg-gray-200 rounded-full h-2 mx-auto mb-4">
+                            <div id="modalProgressBar" class="gradient-bg h-2 rounded-full transition-all duration-300" style="width: 0%"></div>
+                        </div>
+                        <p class="text-gray-600">This may take a few moments</p>
+                    </div>
+                </div>
+            `;
+            
+            document.body.appendChild(modal);
+            
+            // Simulate processing
+            let progress = 0;
+            const progressBar = modal.querySelector('#modalProgressBar');
+            const interval = setInterval(() => {
+                progress += Math.random() * 15;
+                if (progress >= 100) {
+                    progress = 100;
+                    clearInterval(interval);
+                    setTimeout(() => {
+                        // Show success
+                        modal.innerHTML = `
+                            <div class="bg-white rounded-2xl p-8 max-w-md w-full mx-4">
+                                <div class="text-center">
+                                    <div class="w-16 h-16 bg-green-500 rounded-full flex items-center justify-center mx-auto mb-4">
+                                        <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                                        </svg>
+                                    </div>
+                                    <h3 class="text-xl font-semibold text-gray-900 mb-2">Image processed successfully!</h3>
+                                    <div class="flex justify-center space-x-4 mt-6">
+                                        <button onclick="alert('Download would start here')" class="gradient-bg text-white px-6 py-3 rounded-lg font-medium hover:opacity-90 transition-opacity">
+                                            Download Image
+                                        </button>
+                                        <button onclick="document.body.removeChild(this.closest('.fixed'))" class="border border-gray-300 text-gray-700 px-6 py-3 rounded-lg font-medium hover:bg-gray-50 transition-colors">
+                                            Close
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        `;
+                    }, 500);
+                }
+                progressBar.style.width = progress + '%';
+            }, 200);
+        }
+
+        // File upload handling for all upload areas
+        document.addEventListener('DOMContentLoaded', function() {
+            const uploadAreas = document.querySelectorAll('.upload-area');
+            
+            uploadAreas.forEach(area => {
+                area.addEventListener('click', () => {
+                    const input = document.createElement('input');
+                    input.type = 'file';
+                    input.accept = 'image/*';
+                    input.onchange = (e) => {
+                        if (e.target.files.length > 0) {
+                            alert('Image selected: ' + e.target.files[0].name + '\nNow you can adjust settings and process the image.');
+                        }
+                    };
+                    input.click();
+                });
+
+                area.addEventListener('dragover', (e) => {
+                    e.preventDefault();
+                    area.classList.add('dragover');
+                });
+
+                area.addEventListener('dragleave', () => {
+                    area.classList.remove('dragover');
+                });
+
+                area.addEventListener('drop', (e) => {
+                    e.preventDefault();
+                    area.classList.remove('dragover');
+                    const files = e.dataTransfer.files;
+                    if (files.length > 0) {
+                        alert('Image dropped: ' + files[0].name + '\nNow you can adjust settings and process the image.');
+                    }
+                });
+            });
+        });
+    </script>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'97575021220be285',t:'MTc1NjI1MzA4MS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
